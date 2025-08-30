@@ -1,4 +1,6 @@
 import { auth } from "@/auth";
+import DisplayUser from "@/components/DisplayUser";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -7,7 +9,7 @@ const Dashboard = async () => {
   if (!session) {
     redirect("/");
   } else {
-    return <div>{JSON.stringify(session)}</div>;
+    return <DisplayUser session={session} />;
   }
 };
 

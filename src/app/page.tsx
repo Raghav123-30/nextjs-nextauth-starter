@@ -1,15 +1,34 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const LoginPage = () => {
   const router = useRouter();
+  const session = useSession();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (session.status === "loading") {
+      setLoading(true);
+    }
+    if (session.status === "authenticated") {
+      setLoading(false);
+      router.push("/dashboard");
+    }
+    if (session.status === "unauthenticated") {
+      setLoading(false);
+    }
+  }, [session]);
   const handleLogIn = async () => {
     await signIn("google");
     router.push("/dashboard");
   };
+  if (loading) {
+    return <div>Loading....</div>;
+  }
   return (
     <div className="grid min-h-screen">
       <div className="mx-auto self-center max-w-md w-full bg-white rounded-md shadow-md flex flex-col justify-center px-8 py-6">
