@@ -1,10 +1,22 @@
+"use client";
+
+import { signIn } from "next-auth/react";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
+  const router = useRouter();
+  const handleLogIn = async () => {
+    await signIn("google");
+    router.push("/dashboard");
+  };
   return (
     <div className="grid min-h-screen">
       <div className="mx-auto self-center max-w-md w-full bg-white rounded-md shadow-md flex flex-col justify-center px-8 py-6">
-        <button className="bg-gray-100 rounded-md p-4 flex items-center justify-center gap-2 cursor-pointer">
+        <button
+          className="bg-gray-100 rounded-md p-4 flex items-center justify-center gap-2 cursor-pointer"
+          onClick={handleLogIn}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
